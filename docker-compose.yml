@@ -1,8 +1,10 @@
-name: dev-stack
+name: spotify-client
 services:
   postgres:
     container_name: postgres
     image: postgres:16
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready']
     environment:
       - POSTGRES_DB=${DB_DATABASE}
       - POSTGRES_USER=${DB_USER}
@@ -12,18 +14,19 @@ services:
     ports:
       - ${DB_PORT}:5432
 
-  pgadmin:
+  spoticlient:
+    container_name: spoticlient
+    restart: always
+    build:
+      context: .
     ports:
-      - '5050:80'
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=myemail@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=a12345678
-    image: dpage/pgadmin4:8.3
+      - '127.0.0.1:${PORT}:${PORT}'
+    env_file:
+      - .env
     depends_on:
-      - postgres
-    volumes:
-      - ./docker-config/servers_pgadmin.json:/pgadmin4/servers.json
+      postgres:
+        condition: service_healthy
 
 volumes:
   postgres_volume:
-    name: postgres_test_adonisv6
+    name: postgres_prod_spoticlient

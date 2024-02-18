@@ -1,6 +1,6 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Link } from '@inertiajs/react'
+import type { RefObject } from 'react'
 
 const animation = keyframes`
   0% {
@@ -33,7 +33,7 @@ const ScrollContainer = styled.div({
   transform: 'translate(-50%, -50%)',
 })
 
-const ScrollButton = styled(Link)({
+const ScrollButton = styled.button({
   'cursor': 'pointer',
   'position': 'relative',
   'display': 'inline-block',
@@ -63,9 +63,9 @@ const ScrollDot = styled.div({
   animation: `${animation} 2s ease-out infinite`,
 })
 
-const ScrollMouse = (): JSX.Element => (
+const ScrollMouse = ({ targetRef }: { targetRef: RefObject<HTMLElement> }): JSX.Element => (
   <ScrollContainer>
-    <ScrollButton className="reset" href="/#recently-played">
+    <ScrollButton onClickCapture={() => targetRef.current.scrollIntoView({ behavior: 'smooth' })}>
       <ScrollDot />
     </ScrollButton>
     <p css={{ fontSize: '.85em' }}>Défilez pour voir l'historique de lecture</p>

@@ -17,6 +17,7 @@ export function TransmitContextProvider({ children }: { children: ReactNode }) {
       new Transmit({
         baseUrl: 'http://localhost:3333',
         removeSubscriptionOnZeroListener: true,
+        maxReconnectAttempts: 5,
       }),
     []
   )

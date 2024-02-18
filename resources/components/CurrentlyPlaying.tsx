@@ -1,7 +1,6 @@
 import useSubscribe from '@/hooks/useSubscribe'
 import styled from '@emotion/styled'
-import { useState } from 'react'
-import ScrollMouse from './ScrollButton'
+import { useState, type ReactNode } from 'react'
 import TrackDuration from './Track/TrackDuration'
 import TrackProgressBar from './Track/TrackProgressBar'
 
@@ -40,7 +39,13 @@ const LargeImageThumbnaim = styled.img({
   boxShadow: '0 0 .5em .25em rgba(0, 0, 0, 0.35)',
 })
 
-export default function CurrentlyPlaying({ currentTrack }: { currentTrack: Track }) {
+export default function CurrentlyPlaying({
+  currentTrack,
+  children,
+}: {
+  currentTrack: Track
+  children: ReactNode
+}) {
   const [track, setTrack] = useState(currentTrack)
   useSubscribe<{ currentTrack: Track }>(
     'player',
@@ -69,6 +74,7 @@ export default function CurrentlyPlaying({ currentTrack }: { currentTrack: Track
         />
         <div
           css={{
+            'mixBlendMode': 'color-dodge',
             'width': '20em',
             'display': 'flex',
             'gap': '.35em',
@@ -79,7 +85,9 @@ export default function CurrentlyPlaying({ currentTrack }: { currentTrack: Track
           }}
         >
           <h1>{track.item.name}</h1>
-          <h2>{track.item.artists.map((artist) => artist.name).join(', ')}</h2>
+          <h2 css={{ color: '#bbb' }}>
+            {track.item.artists.map((artist) => artist.name).join(', ')}
+          </h2>
           <div
             css={{
               width: '100%',
@@ -99,7 +107,7 @@ export default function CurrentlyPlaying({ currentTrack }: { currentTrack: Track
             progress={track.progress_ms}
           />
         </div>
-        <ScrollMouse />
+        {children}
       </TrackContainer>
     </BackgroundImage>
   )
