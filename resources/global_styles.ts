@@ -27,7 +27,7 @@ export const cssReset = css({
     'textDecoration': 'none',
     'borderBottom': '1px solid transparent',
 
-    '&:hover': {
+    '&:not(.reset):hover': {
       borderBottom: '1px solid',
     },
   },

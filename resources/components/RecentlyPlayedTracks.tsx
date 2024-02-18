@@ -7,9 +7,16 @@ export default function RecentlyPlayedTracks({
 }) {
   console.log(tracks)
   return (
-    <ul css={{ padding: '1em', display: 'flex', gap: '1em', flexDirection: 'column' }}>
-      {tracks.map(({ track, played_at }) => (
-        <TrackCard key={played_at} track={track} playedAt={played_at} />
+    <ul css={{ display: 'flex', gap: '1em', flexDirection: 'column' }}>
+      {tracks.map(({ track, played_at }, index) => (
+        <>
+          <TrackCard key={played_at} track={track} playedAt={played_at} />
+          {index === 0 && (
+            <li key="separator">
+              <hr />
+            </li>
+          )}
+        </>
       ))}
     </ul>
   )

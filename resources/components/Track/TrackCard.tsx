@@ -8,8 +8,8 @@ export default function TrackCard({
   track: SpotifyApi.TrackObjectFull
   playedAt?: string
 }) {
-  const { name, artists, duration_ms, album } = track
-  const thumbnail = album.images[album.images.length - 1]
+  const { name, artists, duration_ms } = track
+  const thumbnail = track?.album.images?.[track?.album.images.length - 1]
   return (
     <li
       css={{

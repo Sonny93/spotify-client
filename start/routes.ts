@@ -19,5 +19,6 @@ router.get('/auth/logout', [UsersController, 'logout'])
 router
   .group(() => {
     router.get('/', [SpotifyController, 'recentlyPlayedTrack'])
+    router.get('/player', [SpotifyController, 'player'])
   })
   .middleware([middleware.auth()])
