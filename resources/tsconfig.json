@@ -3,6 +3,7 @@
     "target": "ESNext",
     "jsx": "react-jsx",
     "lib": ["DOM", "ESNext", "DOM.Iterable", "ES2020"],
+    "jsxImportSource": "@emotion/react",
     "useDefineForClassFields": true,
     "strict": false,
     "baseUrl": ".",
@@ -13,7 +14,7 @@
       "~/*": ["../*"]
     },
     "resolveJsonModule": true,
-    "types": ["vite/client"],
+    "types": ["vite/client", "spotify-web-api-node"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
