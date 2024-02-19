@@ -5,10 +5,13 @@ import InlineList from './InlineList'
 
 const Nav = styled.nav({
   zIndex: 1,
-  position: 'absolute',
+  position: 'fixed',
   top: '1em',
   right: '1em',
   color: '#fff',
+  backgroundColor: 'rgba(0, 0, 0, .35)',
+  padding: '1em',
+  borderRadius: '50px',
 })
 
 const UserCard = styled.div({
@@ -26,8 +29,16 @@ export default function FloatingNavbar() {
       : document.documentElement.requestFullscreen()
   return (
     <Nav>
-      <InlineList>
-        <MdFullscreen size={32} css={{ cursor: 'pointer' }} onClick={toggleFullscreen} />
+      <InlineList separator={undefined}>
+        <MdFullscreen
+          size={32}
+          css={{
+            'cursor': 'pointer',
+            'transition': '.15s',
+            '&:hover': { transform: 'scale(1.1)' },
+          }}
+          onClick={toggleFullscreen}
+        />
         <UserCard>
           <img src={user.avatarUrl} height={32} width={32} css={{ borderRadius: '50%' }} />{' '}
           {user.nickName}

@@ -5,9 +5,11 @@ import { Children, type ReactNode } from 'react'
 export default function InlineList({
   children,
   customCss = {},
+  separator,
 }: {
   children: ReactNode | ReactNode[]
   customCss?: Interpolation<Theme>
+  separator?: string
 }) {
   const totalChilds = Children.count(children)
   return (
@@ -28,8 +30,15 @@ export default function InlineList({
         (child, index) =>
           child && (
             <>
-              <li key={child.toString()}>{child}</li>
-              {index !== totalChilds - 1 && <li css={{ color: '#aaa', fontSize: '.8em' }}>•</li>}
+              <li
+                css={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                key={child.toString()}
+              >
+                {child}
+              </li>
+              {index !== totalChilds - 1 && !!separator && (
+                <li css={{ color: '#aaa', fontSize: '.8em' }}>{separator ?? '•'}</li>
+              )}
             </>
           )
       )}
