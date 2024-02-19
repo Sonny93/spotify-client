@@ -64,6 +64,15 @@ export default function CurrentlyPlaying({
           backgroundImage: `url(${track.item.album.images[0].url})`,
         }
       }
+      css={{
+        '& #scroll-container': {
+          opacity: 0,
+          transition: '.15s',
+        },
+        '&:hover #scroll-container': {
+          opacity: 1,
+        },
+      }}
     >
       <TrackContainer>
         <LargeImageThumbnaim

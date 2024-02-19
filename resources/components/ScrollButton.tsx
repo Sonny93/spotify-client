@@ -64,7 +64,7 @@ const ScrollDot = styled.div({
 })
 
 const ScrollMouse = ({ targetRef }: { targetRef: RefObject<HTMLElement> }): JSX.Element => (
-  <ScrollContainer>
+  <ScrollContainer id="scroll-container">
     <ScrollButton onClickCapture={() => targetRef.current.scrollIntoView({ behavior: 'smooth' })}>
       <ScrollDot />
     </ScrollButton>

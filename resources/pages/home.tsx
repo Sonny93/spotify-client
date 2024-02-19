@@ -1,7 +1,7 @@
 import CurrentlyPlaying from '@/components/CurrentlyPlaying'
 import RecentlyPlayedTracks from '@/components/RecentlyPlayedTracks'
 import ScrollMouse from '@/components/ScrollButton'
-import UserCard from '@/components/UserCard'
+import FloatingNavbar from '@/components/FloatingNavbar'
 import { TransmitContextProvider } from '@/contexts/transmitContext'
 import dayjs from 'dayjs'
 import frLocale from 'dayjs/locale/fr'
@@ -22,7 +22,7 @@ export default function HomePage({ tracks, currentTrack }: HomePageProps) {
   const ref = useRef(null)
   return (
     <TransmitContextProvider>
-      <UserCard />
+      <FloatingNavbar />
       <div>
         <CurrentlyPlaying currentTrack={currentTrack}>
           <ScrollMouse targetRef={ref} />
