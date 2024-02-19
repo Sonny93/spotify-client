@@ -15,7 +15,7 @@ export function TransmitContextProvider({ children }: { children: ReactNode }) {
   const transmit = useMemo(
     () =>
       new Transmit({
-        baseUrl: 'http://localhost:3333',
+        baseUrl: window.location.origin,
         removeSubscriptionOnZeroListener: true,
         maxReconnectAttempts: 5,
       }),
