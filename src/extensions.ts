@@ -10,7 +10,7 @@ declare module '@adonisjs/core/http' {
 HttpContext.getter('spotify', function (this: HttpContext) {
   if (this.auth.isAuthenticated) {
     const spotifyApi = new SpotifyWebApi()
-    spotifyApi.setAccessToken(this.auth.user?.accessToken!)
+    spotifyApi.setAccessToken(this.auth.user?.token.token!)
     return spotifyApi
   } else {
     return undefined

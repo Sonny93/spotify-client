@@ -19,7 +19,13 @@ export default class AuthMiddleware {
       guards?: (keyof Authenticators)[]
     } = {}
   ) {
-    await ctx.auth.authenticateUsing(options.guards, { loginRoute: this.redirectTo })
-    return next()
+    const user = await ctx.auth.authenticateUsing(options.guards, { loginRoute: this.redirectTo })
+    const currentDate = Date.now()
+    const tokenDate = new Date(user.token.expiresAt).getTime()
+    if (tokenDate > currentDate) {
+      return next()
+    } else {
+      return ctx.response.redirect(await ctx.ally.use('spotify').getRedirectUrl())
+    }
   }
 }

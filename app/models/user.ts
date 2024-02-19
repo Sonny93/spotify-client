@@ -1,4 +1,4 @@
-import { Oauth1AccessToken, Oauth2AccessToken } from '@adonisjs/ally/types'
+import type { SpotifyToken } from '@adonisjs/ally/types'
 import { withAuthFinder } from '@adonisjs/auth'
 import { compose } from '@adonisjs/core/helpers'
 import hash from '@adonisjs/core/services/hash'
@@ -34,7 +34,7 @@ export default class User extends compose(AppBaseModel, AuthFinder) {
   declare avatarUrl: string | null
 
   @column({ serializeAs: null })
-  declare accessToken: (Oauth2AccessToken | Oauth1AccessToken)['token']
+  declare token: SpotifyToken
 
   @column.dateTime({
     autoCreate: true,

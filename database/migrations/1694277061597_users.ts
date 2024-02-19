@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.string('name')
       table.boolean('is_verified')
       table.string('avatar_url').nullable()
-      table.text('access_token')
+      table.json('token')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

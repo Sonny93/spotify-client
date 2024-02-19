@@ -3,3 +3,6 @@ db:
 
 prod:
 	docker compose up -d --build
+
+push:
+	node ace migration:fresh

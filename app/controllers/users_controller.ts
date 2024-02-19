@@ -25,14 +25,14 @@ export default class UsersController {
     }
 
     const { emailVerificationState, token, original, ...spotifyUser } = await spotify.user()
-    const user = await User.firstOrCreate(
+    const user = await User.updateOrCreate(
       {
         email: spotifyUser.email,
       },
       {
         ...spotifyUser,
         isVerified: false,
-        accessToken: token.token,
+        token,
       }
     )
 
