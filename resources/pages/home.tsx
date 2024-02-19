@@ -1,7 +1,7 @@
 import CurrentlyPlaying from '@/components/CurrentlyPlaying'
+import FloatingNavbar from '@/components/FloatingNavbar'
 import RecentlyPlayedTracks from '@/components/RecentlyPlayedTracks'
 import ScrollMouse from '@/components/ScrollButton'
-import FloatingNavbar from '@/components/FloatingNavbar'
 import { TransmitContextProvider } from '@/contexts/transmitContext'
 import dayjs from 'dayjs'
 import frLocale from 'dayjs/locale/fr'
@@ -23,12 +23,21 @@ export default function HomePage({ tracks, currentTrack }: HomePageProps) {
   return (
     <TransmitContextProvider>
       <FloatingNavbar />
-      <div>
+      <div
+        css={{ scrollSnapType: 'y mandatory', overscrollBehaviorX: 'contain', overflowY: 'scroll' }}
+      >
         <CurrentlyPlaying currentTrack={currentTrack}>
           <ScrollMouse targetRef={ref} />
         </CurrentlyPlaying>
         <div
-          css={{ padding: '1em', display: 'flex', gap: '1em', flexDirection: 'column' }}
+          css={{
+            padding: '1em',
+            scrollSnapStop: 'normal',
+            scrollSnapAlign: 'center',
+            display: 'flex',
+            gap: '1em',
+            flexDirection: 'column',
+          }}
           ref={ref}
         >
           <h2>Historique de lecture</h2>

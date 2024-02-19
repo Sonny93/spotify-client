@@ -24,6 +24,7 @@ const TrackContainer = styled.div({
   'fontSize': '1.5em',
   'color': '#fff',
   'backdropFilter': 'blur(40px) brightness(0.7)',
+  'padding': '0 15vw',
   'display': 'flex',
   'gap': '2em',
   'alignItems': 'center',
@@ -35,8 +36,12 @@ const TrackContainer = styled.div({
 })
 
 const LargeImageThumbnaim = styled.img({
-  borderRadius: '1em',
-  boxShadow: '0 0 .5em .25em rgba(0, 0, 0, 0.35)',
+  'borderRadius': '1em',
+  'boxShadow': '0 0 .5em .25em rgba(0, 0, 0, 0.35)',
+  'transition': '.15s',
+  '&:hover': {
+    transform: 'scale(1.1)',
+  },
 })
 
 export default function CurrentlyPlaying({
@@ -65,6 +70,8 @@ export default function CurrentlyPlaying({
         }
       }
       css={{
+        'scrollSnapStop': 'normal',
+        'scrollSnapAlign': 'center',
         '& #scroll-container': {
           opacity: 0,
           transition: '.15s',
@@ -77,15 +84,21 @@ export default function CurrentlyPlaying({
       <TrackContainer>
         <LargeImageThumbnaim
           src={track.item.album.images[1].url}
-          height={track.item.album.images[1].height}
-          width={track.item.album.images[1].width}
           alt={track.item.name}
+          css={{
+            'height': '25vw',
+            'width': '25vw',
+            '@media (max-width: 1024px)': {
+              height: 'auto',
+              width: '35vw',
+            },
+          }}
         />
         <div
           css={{
             'mixBlendMode': 'color-dodge',
-            'width': '20em',
             'display': 'flex',
+            'flex': 1,
             'gap': '.35em',
             'flexDirection': 'column',
             '@media (max-width: 1024px)': {
