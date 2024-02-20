@@ -27,6 +27,11 @@ const BackgroundImage = styled.header({
   '&:hover #scroll-container': {
     opacity: 1,
   },
+  '@media (max-width: 1024px)': {
+    '& #scroll-container': {
+      display: 'none',
+    },
+  },
 })
 
 const TrackContainer = styled.div({
@@ -35,23 +40,44 @@ const TrackContainer = styled.div({
   'fontSize': '1.5em',
   'color': '#fff',
   'backdropFilter': 'blur(40px) brightness(0.7)',
-  'padding': '0 15vw',
+  'padding': '0 4em',
   'display': 'flex',
   'gap': '2em',
   'alignItems': 'center',
   'justifyContent': 'center',
   '@media (max-width: 1024px)': {
     padding: '1em',
+    justifyContent: 'space-between',
     flexDirection: 'column',
   },
 })
 
 const LargeImageThumbnail = styled.img({
+  'width': 'clamp(250px, 100%, 400px)',
   'borderRadius': '1em',
   'boxShadow': '0 0 .5em .25em rgba(0, 0, 0, 0.35)',
-  'transition': '.15s',
+  'aspectRatio': '1 / 1',
+  'transition': 'transform .15s',
   '&:hover': {
     transform: 'scale(1.1)',
+  },
+  '@media (max-width: 1024px)': {
+    width: 'clamp(250px, 100%, 500px)',
+  },
+})
+
+const SongName = styled.h1({
+  'color': '#fff',
+  'fontSize': '2em',
+  '@media (max-width: 1024px)': {
+    fontSize: '1.25em',
+  },
+})
+const ArtistName = styled.h2({
+  'color': '#ccc',
+  'fontSize': '1.5em',
+  '@media (max-width: 1024px)': {
+    fontSize: '.75em',
   },
 })
 
@@ -92,14 +118,6 @@ export default function CurrentlyPlaying({
           <LargeImageThumbnail
             src={currentTrack.item.album.images[1].url}
             alt={currentTrack.item.name}
-            css={{
-              'height': '25vw',
-              'width': '25vw',
-              '@media (max-width: 1024px)': {
-                height: 'auto',
-                width: '35vw',
-              },
-            }}
           />
           <div
             css={{
@@ -110,13 +128,14 @@ export default function CurrentlyPlaying({
               'flexDirection': 'column',
               '@media (max-width: 1024px)': {
                 width: '100%',
+                flex: 'unset',
               },
             }}
           >
-            <h1>{currentTrack.item.name}</h1>
-            <h2 css={{ color: '#bbb' }}>
+            <SongName>{currentTrack.item.name}</SongName>
+            <ArtistName>
               {currentTrack.item.artists.map((artist) => artist.name).join(', ')}
-            </h2>
+            </ArtistName>
             <div
               css={{
                 width: '100%',
