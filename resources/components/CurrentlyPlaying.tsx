@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { type ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { CiPause1, CiPlay1 } from 'react-icons/ci'
 import TrackDuration from './Track/TrackDuration'
 import TrackProgressBar from './Track/TrackProgressBar'
@@ -63,6 +63,20 @@ export default function CurrentlyPlaying({
   children: ReactNode
 }) {
   const isPlaying = currentTrack && currentTrack.currently_playing_type === 'track'
+
+  useEffect(() => {
+    document.title = currentTrack?.item?.name
+      ? `${currentTrack?.item?.name} - SpotiClient`
+      : 'SpotiClient'
+    let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement
+    if (!link) {
+      link = document.createElement('link')
+      link.rel = 'icon'
+      document.getElementsByTagName('head')[0].appendChild(link)
+    }
+    link.href = currentTrack?.item?.album.images[2].url ?? ''
+  }, [currentTrack])
+
   return (
     <BackgroundImage
       style={
