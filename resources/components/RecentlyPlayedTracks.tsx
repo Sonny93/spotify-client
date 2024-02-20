@@ -5,7 +5,6 @@ export default function RecentlyPlayedTracks({
 }: {
   tracks: SpotifyApi.UsersRecentlyPlayedTracksResponse['items']
 }) {
-  console.log(tracks)
   return (
     <ul css={{ display: 'flex', gap: '1em', flexDirection: 'column' }}>
       {tracks.map(({ track, played_at }, index) => (

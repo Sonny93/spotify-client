@@ -10,8 +10,8 @@ export default function TrackProgressBar({
     <div
       css={{
         'position': 'relative',
+        'height': '.6em',
         'width': '100%',
-        'height': '.5em',
         'backgroundColor': '#aaa',
         'borderRadius': '.5em',
         'overflow': 'hidden',

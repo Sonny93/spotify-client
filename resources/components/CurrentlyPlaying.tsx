@@ -1,6 +1,6 @@
-import useSubscribe from '@/hooks/useSubscribe'
 import styled from '@emotion/styled'
-import { useState, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
+import { CiPause1, CiPlay1 } from 'react-icons/ci'
 import TrackDuration from './Track/TrackDuration'
 import TrackProgressBar from './Track/TrackProgressBar'
 
@@ -51,22 +51,15 @@ export default function CurrentlyPlaying({
   currentTrack: Track
   children: ReactNode
 }) {
-  const [track, setTrack] = useState(currentTrack)
-  useSubscribe<{ currentTrack: Track }>(
-    'player',
-    ({ currentTrack }) => setTrack(currentTrack),
-    '/player'
-  )
-
-  if (track.currently_playing_type !== 'track') {
+  if (currentTrack.currently_playing_type !== 'track') {
     return <></>
   }
 
   return (
     <BackgroundImage
       style={
-        track.item.album && {
-          backgroundImage: `url(${track.item.album.images[0].url})`,
+        currentTrack.item.album && {
+          backgroundImage: `url(${currentTrack.item.album.images[0].url})`,
         }
       }
       css={{
@@ -83,8 +76,8 @@ export default function CurrentlyPlaying({
     >
       <TrackContainer>
         <LargeImageThumbnaim
-          src={track.item.album.images[1].url}
-          alt={track.item.name}
+          src={currentTrack.item.album.images[1].url}
+          alt={currentTrack.item.name}
           css={{
             'height': '25vw',
             'width': '25vw',
@@ -106,9 +99,9 @@ export default function CurrentlyPlaying({
             },
           }}
         >
-          <h1>{track.item.name}</h1>
+          <h1>{currentTrack.item.name}</h1>
           <h2 css={{ color: '#bbb' }}>
-            {track.item.artists.map((artist) => artist.name).join(', ')}
+            {currentTrack.item.artists.map((artist) => artist.name).join(', ')}
           </h2>
           <div
             css={{
@@ -120,13 +113,15 @@ export default function CurrentlyPlaying({
               justifyContent: 'space-between',
             }}
           >
-            <TrackDuration duration={track.progress_ms} />
-            <TrackDuration duration={track.item.duration_ms} />
+            <TrackDuration duration={currentTrack.progress_ms} />
+            {!currentTrack.is_playing && <CiPlay1 size={24} />}
+            {currentTrack.is_playing && <CiPause1 size={24} />}
+            <TrackDuration duration={currentTrack.item.duration_ms} />
           </div>
           <TrackProgressBar
-            key={track.item.id}
-            duration={track.item.duration_ms}
-            progress={track.progress_ms}
+            key={currentTrack.item.id}
+            duration={currentTrack.item.duration_ms}
+            progress={currentTrack.progress_ms}
           />
         </div>
         {children}

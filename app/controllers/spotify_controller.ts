@@ -13,17 +13,25 @@ export default class SpotifyController {
 
   // TODO: find a better solution
   async player(ctx: HttpContext) {
-    const intervalId = setInterval(() => this.broadcastCurrentPlayingTrack(ctx), BROADCAST_DELAY)
+    const intervalId: any = setInterval(
+      () => this.broadcastCurrentPlayingTrack(ctx, intervalId),
+      BROADCAST_DELAY
+    )
     transmit.on('disconnect', () => clearTimeout(intervalId))
   }
 
-  private async broadcastCurrentPlayingTrack({ auth, spotify }: HttpContext) {
+  private async broadcastCurrentPlayingTrack(
+    { auth, spotify }: HttpContext,
+    interval: NodeJS.Timeout
+  ) {
     try {
       const { body: currentTrack } = await spotify!.getMyCurrentPlayingTrack()
-      transmit.broadcast(`player`, { currentTrack })
+      transmit.broadcast('player', { currentTrack })
       logger.debug(`Broadcast current track (${currentTrack.item?.name}) to ${auth.user?.id}`)
     } catch (error) {
+      transmit.broadcast('player', { currentTrack: undefined, authNeeded: true })
       logger.error(`Spotify timeout when broadcasting to ${auth.user?.id}`)
+      clearInterval(interval)
     }
   }
 }
