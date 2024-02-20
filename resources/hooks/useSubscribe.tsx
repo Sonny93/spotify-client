@@ -11,9 +11,13 @@ export default function useSubscribe<T>(
     const unsubscribe = transmit.listenOn(channel, (newData: T) =>
       setTimeout(() => onNewData(newData))
     )
+
     if (initRequestUrl) {
-      fetch(initRequestUrl)
+      transmit.on('connected', fetchInitRequest)
     }
+
     return () => unsubscribe(true)
   }, [])
+
+  const fetchInitRequest = () => fetch(initRequestUrl)
 }

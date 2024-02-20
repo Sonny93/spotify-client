@@ -17,7 +17,8 @@ export function TransmitContextProvider({ children }: { children: ReactNode }) {
       new Transmit({
         baseUrl: window.location.origin,
         removeSubscriptionOnZeroListener: true,
-        maxReconnectAttempts: 5,
+        maxReconnectAttempts: Infinity,
+        onReconnectAttempt: (attempt) => console.log('Connection lost, attempt', attempt),
       }),
     []
   )
