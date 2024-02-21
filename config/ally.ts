@@ -6,7 +6,12 @@ const allyConfig = defineConfig({
     clientId: env.get('SPOTIFY_CLIENT_ID'),
     clientSecret: env.get('SPOTIFY_CLIENT_SECRET'),
     callbackUrl: env.get('SPOTIFY_REDIRECT_URL'),
-    scopes: ['user-read-currently-playing', 'user-read-recently-played', 'user-read-email'],
+    scopes: [
+      'user-read-currently-playing',
+      'user-read-recently-played',
+      'user-read-email',
+      'user-modify-playback-state',
+    ],
   }),
 })
 

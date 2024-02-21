@@ -38,4 +38,12 @@ export default class SpotifyController {
     const { body: currentTrack } = await spotify!.getMyCurrentPlayingTrack()
     return JSON.stringify(currentTrack) !== JSON.stringify({}) ? currentTrack : undefined
   }
+
+  async play({ spotify }: HttpContext) {
+    await spotify!.play()
+  }
+
+  async pause({ spotify }: HttpContext) {
+    await spotify!.pause()
+  }
 }

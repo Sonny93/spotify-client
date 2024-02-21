@@ -6,7 +6,7 @@ import TrackProgressBar from './Track/TrackProgressBar'
 
 const BackgroundImage = styled.header({
   'position': 'relative',
-  'height': '100vh',
+  'height': '100dvh',
   'width': '100%',
   'backgroundRepeat': 'no-repeat',
   'backgroundPosition': 'center',
@@ -52,12 +52,15 @@ const TrackContainer = styled.div({
   },
 })
 
-const LargeImageThumbnail = styled.img({
+const LargeImageThumbnail = styled.div({
   'width': 'clamp(250px, 100%, 400px)',
+  'backgroundRepeat': 'no-repeat',
+  'backgroundPosition': 'center',
+  'backgroundSize': 'cover',
   'borderRadius': '1em',
   'boxShadow': '0 0 .5em .25em rgba(0, 0, 0, 0.35)',
   'aspectRatio': '1 / 1',
-  'transition': 'transform .15s',
+  'transition': 'transform .15s, background-image .15s',
   '&:hover': {
     transform: 'scale(1.1)',
   },
@@ -90,6 +93,9 @@ export default function CurrentlyPlaying({
 }) {
   const isPlaying = currentTrack && currentTrack.currently_playing_type === 'track'
 
+  const handlePlaySong = () => fetch('/player/play', { method: 'post' })
+  const handlePauseSong = () => fetch('/player/pause', { method: 'post' })
+
   useEffect(() => {
     document.title = currentTrack?.item?.name
       ? `${currentTrack?.item?.name} - SpotiClient`
@@ -116,8 +122,9 @@ export default function CurrentlyPlaying({
       {isPlaying && (
         <TrackContainer>
           <LargeImageThumbnail
-            src={currentTrack.item.album.images[1].url}
-            alt={currentTrack.item.name}
+            style={{
+              backgroundImage: `url(${currentTrack.item.album.images[1].url})`,
+            }}
           />
           <div
             css={{
@@ -147,8 +154,8 @@ export default function CurrentlyPlaying({
               }}
             >
               <TrackDuration duration={currentTrack.progress_ms} />
-              {!currentTrack.is_playing && <CiPlay1 size={24} />}
-              {currentTrack.is_playing && <CiPause1 size={24} />}
+              {!currentTrack.is_playing && <CiPlay1 size={24} onClick={handlePlaySong} />}
+              {currentTrack.is_playing && <CiPause1 size={24} onClick={handlePauseSong} />}
               <TrackDuration duration={currentTrack.item.duration_ms} />
             </div>
             <TrackProgressBar

@@ -20,5 +20,7 @@ router
   .group(() => {
     router.get('/', [SpotifyController, 'recentlyPlayedTrack'])
     router.get('/player', [SpotifyController, 'player'])
+    router.post('/player/play', [SpotifyController, 'play'])
+    router.post('/player/pause', [SpotifyController, 'pause'])
   })
   .middleware([middleware.auth()])
